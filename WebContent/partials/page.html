@@ -1,0 +1,37 @@
+<!-- This is a template Page -->
+<!-- Start Page -->
+<div class="container-fluid">
+
+	<!-- Start Rows -->
+	<div ng-repeat="row in pageConfig.rows" class="row" >
+	
+		<!-- Start Columns -->
+		<div ng-repeat="column in row.columns" 
+			ng-class="{ 'col-sm-{{column.size}}' : column.size ,'col-sm-offset-{{column.offset}}' : column.offset }" >
+
+
+			<h3 class="panel-title">{{column.header}}</h3>
+			<br>
+			
+			<!-- Start Panel -->
+			<div ng-repeat="panel in column.panels">
+
+				<h3 class="panel-title">{{panel.header}}</h3>
+							
+				<div ng-class="{ 'panel panel-default' : panel.shadow!='off' }" ng-if="panel.type">
+					<div class="panel-body">
+						<ng-include src="getPartialUrl(panel)"></ng-include>
+					</div>
+				</div>
+
+			</div>
+			<!-- End Panels  -->
+			
+		</div>
+		<!-- End Columns -->
+		
+	</div>
+	<!-- End Rows -->
+	
+</div>
+<!-- End Page -->

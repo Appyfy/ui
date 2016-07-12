@@ -1,0 +1,25 @@
+<div class="list-group" ng-controller="ListCtrl">
+
+	<div class="list-group-item" ng-repeat="row in data[panel.data.id]"
+		ng-click="fetchFieldChainedData(panel)">
+		<div class="row-action-primary">
+			<i class="material-icons"></i>
+		</div>
+		<div class="row-content">
+			<!-- <div class="least-content">15m</div> -->
+			
+			<h4 class="list-group-item-heading" ng-click="{{panel.action}}">{{row.name}}</h4>
+			
+			<p class="list-group-item-text">{{row.name}}</p>
+			
+			<div class="action-secondary" ng-if="panel.action.secondary">
+				<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }"  ng-click="doAction(panel.action.secondary,row)">
+					<i ng-class="{ '{{panel.action.secondary.name}}' : !row.success, 'mdi-navigation-check': row.success }"></i>
+					<div class="ripple-wrapper"></div>
+				</button>
+			</div>
+		</div>
+		<div ng-if="$last == false" class="list-group-separator"></div>
+	</div>
+
+</div>

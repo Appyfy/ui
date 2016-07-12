@@ -1,0 +1,50 @@
+
+#wrapper {
+    transition: all 0.5s;
+    transition-delay : 0.5s;
+	margin-bottom: 65px;
+}
+
+#navbar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    width: 0;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #eeeeee;
+    1background-color: white;
+    transition: all 0.5s ease;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+#wrapper.toggled #navbar-wrapper {
+    width: 200px;
+}
+
+#content-wrapper {
+    width: 100%;
+    position: absolute;
+    transition: all 0.5s ease;
+}
+
+@media(min-width:768px) {
+
+	#navbar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #navbar-wrapper {
+        width: 0;
+    }
+    
+	#content-wrapper {
+        left: 250px;
+        width : calc(100% - 250px);
+    }
+    
+    #wrapper.toggled #content-wrapper {
+        left: 0px;
+        width : 100%;
+    }
+    
+}

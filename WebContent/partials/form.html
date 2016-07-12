@@ -1,0 +1,62 @@
+<form role="form">
+
+	<div ng-repeat="field in panel.fields">
+	
+		<ng-switch on="field.type">
+		
+			<div class="form-group col-xs-12 col-sm-{{field.size || 6}}" 
+			ng-class="{ 'col-sm-offset-{{field.offset}}' : field.offset }" >
+
+			<label ng-switch-when="label">{{field.label}}</label>
+
+			<h2 ng-switch-when="header">{{field.label}}</h2>
+
+			<img ng-switch-when="image" src="{{getImageUrl(field)}}" ></img>
+		
+			<select ng-switch-when="select" ng-model="data[field.id]" class="form-control" id="{{field.id}}" 
+				ng-init="fetchLookupData(field)" ng-change="fetchLookupChainedData(field)">
+				<option value="" disabled> Select {{field.label}}</option>
+				<option ng-repeat="option in data[field.data.id]">{{option.name}}</option>
+			</select>
+		
+			<a ng-switch-when="link_button" ng-click="openLink(field)" href="" target="{{field.target}}" class="btn btn-raised btn-default btn-success" id="{{field.id}}"> 
+				<div class="ripple-wrapper"></div>{{field.value}}
+			</a>
+	
+			<button ng-switch-when="button" class="btn btn-raised btn-default" ng-click="{{field.action.func}}" ng-class="{ 'btn-success' : field.style = 'success' } " id="{{field.id}}" >
+				<i class="{{field.action.name}}"></i><div class="ripple-wrapper"></div>{{field.value}}
+				<span class="badge" ng-if="field.badge" ng-bind="data[field.badge]"></span>
+			</button>
+			
+			<input ng-switch-when="datetime" ng-datetime-picker="dd-mm-yyy" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="datetime" placeholder="{{field.placeholder}}">
+			
+			<input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="{{field.type}}" placeholder="{{field.placeholder}}">
+			
+			<div ng-switch-when="slider" rnCarousel items="field.path"></div> 
+			
+			<span class="form-highlight"></span><span class="form-bar"></span>
+
+			</div>
+	
+		</ng-switch>
+	
+	</div>
+	
+	<div class="form-group col-xs-12" ng-if="panel.mode == 'edit'">
+		<hr>
+		<button class="col-xs-12 col-sm-6 col-md-4 col-lg-3 btn btn-raised btn-default btn-success">
+			<div class="ripple-wrapper"></div>Submit
+		</button>
+		<button class="btn btn-raised btn-default">
+			<div class="ripple-wrapper"></div>Reset
+		</button>
+	</div>
+	
+	<div class="form-group col-xs-12" ng-if="panel.mode == 'search'">
+		<hr>
+		<button class="col-xs-12 col-sm-6 col-md-4 col-lg-3 btn btn-raised btn-default btn-success" ng-click="doSearch(panel)">
+			<div class="ripple-wrapper"></div>Search
+		</button>
+	</div>
+
+</form>

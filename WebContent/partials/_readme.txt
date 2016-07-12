@@ -1,0 +1,18 @@
+index
+	head
+		css
+	body
+		view
+			navbar
+				navbar_header
+				nav
+				navbar_footer
+			content
+				content_header
+				page
+					sections
+						sub_sections
+							panel
+							form/list/table/slider
+				content_footer
+		js
