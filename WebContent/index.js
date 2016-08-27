@@ -22,8 +22,6 @@ injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/material/css/material.css");
 injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/material/css/material-fullpalette.css");
 injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/material/css/ripples.css");
 
-//injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/ne-theme.css");
-
 //injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/material/plugins/datetimepicker.css");
 
 injectCSS(APPYCDN_BASE_URL + "/lib/font-awesome/3.2.1/css/font-awesome.css");
@@ -41,8 +39,9 @@ injectJS(APPYCDN_BASE_URL + "/lib/jquery/js/jquery-1.9.1.js");
 defer(winLib, 'jQuery', function() {
 	
 injectJS(APPYCDN_BASE_URL + "/lib/jquery/js/jquery-ui-1.9.2.js");
-injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/forms/validation/jquery.validate.js");
+//injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/forms/validation/jquery.validate.js");
 //injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/forms/select2/select2.js");
+injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/jquery.sparkline.js");
 
 //injectJS(APPYCDN_BASE_URL + "/lib/misc/moment.js");
 //injectJS(APPYCDN_BASE_URL + "/lib/misc/moment-with-locales.min.js");
@@ -78,6 +77,9 @@ defer(ngMod, 'ngSanitize',function() {
 injectJS(APPYCDN_BASE_URL + "/lib/angular/v1.2.9/angular-touch.js");
 defer(ngMod, 'ngTouch', function() {
 
+injectJS(APPYCDN_BASE_URL + "/lib/angular/v1.2.9/angular-animate.js");
+defer(ngMod, 'ngAnimate', function() {
+	
 injectJS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-ui.js");
 defer(ngMod, 'ui',function() {
 
@@ -109,8 +111,9 @@ defer(ctrl, 'DataCtrl', function() {
 injectJS(APPYUI_BASE_URL + "/js/list.js");
 injectJS(APPYUI_BASE_URL + "/js/table.js");
 
-injectJS(APPYUI_BASE_URL + "/js/appy.js");
+injectJS(APPYUI_BASE_URL + "/js/slider.js");
 
+injectJS(APPYUI_BASE_URL + "/js/appy.js");
 defer(ngMod, 'appy', function() {
 
 angular.bootstrap(document, ['appy']);
@@ -125,6 +128,7 @@ angular.bootstrap(document, ['appy']);
 });// resource
 });// sanitize
 });// touch
+});// animate
 
 });// ui
 });// ui.bootstrap

@@ -90,7 +90,7 @@ function NavCtrl($rootScope, $http) {
 		if(linkButton.link) {
 			window.open(linkButton.link,linkButton.target);
 		} else {
-			$rootScope.loadPage(linkButton.page.name, linkButton.page.headers);
+			$rootScope.loadPage(linkButton.page.name, linkButton.page.header);
 		}
 		
 	};
@@ -122,8 +122,4 @@ function NavCtrl($rootScope, $http) {
 		return '/partials/' + panel.type + '.html';
 	};
 	
-	$rootScope.getImageUrl = function(img) {
-		return APPYSTR_BASE_URL + '/' + $rootScope.app + '/images/' + img.path;
-	};
-
 }
