@@ -19,7 +19,7 @@ function InitApp($routeParams, $rootScope) {
 //		console.log(error);
 //	}
 	
-	$rootScope.loadApp($routeParams.page);
+//	$rootScope.loadApp($routeParams.page);
 }
 
 function config($routeProvider, $locationProvider, $httpProvider) {

@@ -27,6 +27,7 @@ function initCustomEventHandler($rootScope) {
 		
 		$rootScope.data['cartIndex'][row.name] = oldQty + 1;
 		$rootScope.data['cartSize'] = ($rootScope.data['cartSize'] || 0 )+ 1;
+		row.success = true;
 	};
 	
 	$rootScope.saveCart = function(){

@@ -8,12 +8,12 @@
 		<div class="row-content">
 			<!-- <div class="least-content">15m</div> -->
 			
-			<h4 class="list-group-item-heading" ng-click="{{panel.action}}">{{row.name}}</h4>
+			<h5 class="list-group-item-heading" ng-click="doAction(panel.action.primary, row)" ng-bind="row[panel.data.list.heading]"></h5>
 			
-			<p class="list-group-item-text">{{row.name}}</p>
+			<p class="list-group-item-text" ng-if="panel.data.list.text">{{row.name}}</p>
 			
 			<div class="action-secondary" ng-if="panel.action.secondary">
-				<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }"  ng-click="doAction(panel.action.secondary,row)">
+				<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }"  ng-click="doAction(panel.action.secondary, row)">
 					<i ng-class="{ '{{panel.action.secondary.name}}' : !row.success, 'mdi-navigation-check': row.success }"></i>
 					<div class="ripple-wrapper"></div>
 				</button>

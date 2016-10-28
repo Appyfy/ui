@@ -1,7 +1,6 @@
 'use strict';
 
-function NavCtrl($rootScope, $http) {
-	
+function NavCtrl($rootScope, $http, $scope) {
 	
 	$rootScope.showNav = true;
 	$rootScope.arrow = false;
@@ -74,7 +73,7 @@ function NavCtrl($rootScope, $http) {
 			$rootScope.loadPage(pageName);
 		} 
 		$http.get('/nav.json').success(function(data) {
-			$rootScope.navConfig = data;
+			$rootScope.navConfig = $rootScope.data['navConfig'] = data;
 			if(!pageName) {
 				var homePage = $rootScope.appConfig.homePage; 
 				if(homePage) {
@@ -103,9 +102,7 @@ function NavCtrl($rootScope, $http) {
 		
 		$http.get('/pages/' + name + '.json').success(function(data) {
 			$rootScope.pageConfig = data;
-//			$rootScope.arrow = $rootScope.pageConfig.parentPage != null;
 		});
-		
 		
 		if(!isBack && $rootScope.pageInfo) {
 			$rootScope.pageStack.push($rootScope.pageInfo);
@@ -121,5 +118,12 @@ function NavCtrl($rootScope, $http) {
 		}
 		return '/partials/' + panel.type + '.html';
 	};
+	
+	$scope.panel = { 
+		data : { id : "navConfig",  list : { heading : "header" } },
+		action : { primary : { func : "navigatePage" } }
+	};
+	
+	$rootScope.loadApp();
 	
 }

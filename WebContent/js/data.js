@@ -138,8 +138,6 @@ function DataCtrl($rootScope, $http) {
 		} catch (error) {
 			console.log(error.stack);
 		}
-
-		row.success = true;
 	};
 	
 }
