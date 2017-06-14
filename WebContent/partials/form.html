@@ -1,16 +1,18 @@
-<form role="form">
+<form role="form" ng-controller="FormCtrl">
 
 	<div ng-repeat="field in panel.fields">
 	
 		<ng-switch on="field.type">
 		
-			<div class="1form-group col-xs1-12 col-xs-{{field.size || 6}}" ng-class="{ 'col-sm-offset-{{field.offset}}' : field.offset }" >
+			<div class="1form-group col-xs-{{field.size || 6}}" ng-class="{ 'col-xs-offset-{{field.offset}}' : field.offset }" >
+			
+			<label ng-if="field.label">{{field.label}}</label>
+			
+			<label ng-switch-when="label" id="{{field.id}}">{{data[field.id]}}</label>
 
-			<label ng-switch-when="label">{{field.label}}</label>
+			<p ng-switch-when="para" ng-bind-html="data[field.id]" class="text-justify" id="{{field.id}}"></p>
 
-			<p ng-switch-when="para" class="text-justify">{{field.value}}</p>
-
-			<h2 ng-switch-when="header">{{field.label}}</h2>
+			<h2 ng-switch-when="header">{{field.text}}</h2>
 
 			<img ng-switch-when="image" src="{{getImageURI(field)}}" id="{{field.id}}"></img>
 			
@@ -33,11 +35,9 @@
 			
 			<input ng-switch-when="date" ng-datetime-picker="dd-mm-yyy" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="datetime" placeholder="{{field.placeholder}}">
 			
-			<input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="{{field.type}}" placeholder="{{field.placeholder}}">
+			<input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}" placeholder="{{field.placeholder}}">
 			
-			<div ng-switch-when="slider">
-				<ng-include src='"/partials/slider.html"'></ng-include>
-			</div>
+			<textarea rows="{{field.rows || 10}}" ng-switch-when="textarea" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="{{field.type}}" placeholder="{{field.placeholder}}" ></textarea>
 			
 			<sparkline ng-switch-when="sparkline" data="{{data[field.id]}}" id="{{field.id}}"></sparkline>
 			
@@ -45,20 +45,36 @@
 
 			<!-- <span class="form-highlight"></span><span class="form-bar"></span> -->
 
+			<div ng-switch-when="slider">
+				<ng-include src='"/partials/slider.html"'></ng-include>
+			</div>
+
+			<div ng-switch-when="table">
+				<ng-include src='"/partials/table.html"'></ng-include>
+			</div>
+			
+			<div ng-switch-when="list">
+				<ng-include src='"/partials/list.html"'></ng-include>
+			</div>
+
+			<div ng-switch-when="custom">
+				<ng-include src="getPartialUrl(field)"></ng-include>
+			</div>
+
 			</div>
 	
 		</ng-switch>
 	
 	</div>
 	
+	
 	<div class="form-group col-xs-12" ng-if="panel.mode == 'edit'">
 		<hr>
-		<button class="col-xs-12 col-sm-6 col-md-4 col-lg-3 btn btn-raised btn-default btn-success">
+		<div class="navbar-fixed-bottom" style="padding-left: 10px; padding-right: 10px;">
+		<button class="col-xs-12 col-sm-6 col-md-4 col-lg-3 btn btn-raised btn-default btn-success" ng-click="doSave(panel)">
 			<div class="ripple-wrapper"></div>Submit
 		</button>
-		<button class="btn btn-raised btn-default">
-			<div class="ripple-wrapper"></div>Reset
-		</button>
+		</div>
 	</div>
 	
 	<div class="form-group col-xs-12" ng-if="panel.mode == 'search'">

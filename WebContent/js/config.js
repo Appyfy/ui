@@ -1,25 +1,19 @@
 'use strict';
 
-function InitApp($routeParams, $rootScope) {
+function initApp($routeParams, $rootScope) {
 
 	$rootScope.app = $routeParams.app;
 	$rootScope.role = $routeParams.role || 'index';
 	
-//	$rootScope.APPYCDN_BASE_URL = APPYCDN_BASE_URL;
-//	$rootScope.APPYUI_BASE_URL = APPYUI_BASE_URL;
-//	$rootScope.APPYSTR_BASE_URL = APPYSTR_BASE_URL;
-//	$rootScope.APPYBE_BASE_URL = APPYBE_BASE_URL;
+	try {
+		injectJS(APPYSTR_BASE_URL + '/' + $rootScope.app + '/app.js');
+		defer(winLib, $rootScope.app, function(){
+			initAppCustom($rootScope);
+		});
+	} catch(error) {
+		console.log(error);
+	}
 	
-//	try {
-//		injectJS(APPYSTR_BASE_URL + '/' + $rootScope.app + '/app.js');
-//		defer(winLib, $rootScope.app, function(){
-//			initCustomEventHandler($rootScope);
-//		});
-//	} catch(error) {
-//		console.log(error);
-//	}
-	
-//	$rootScope.loadApp($routeParams.page);
 }
 
 function config($routeProvider, $locationProvider, $httpProvider) {
@@ -27,9 +21,9 @@ function config($routeProvider, $locationProvider, $httpProvider) {
 	//$locationProvider.html5Mode(true);
 	
   	$routeProvider.
-  	when('/:app', {  templateUrl : '/partials/body.html', controller: InitApp }).
-  	when('/:app/:role', {  templateUrl : '/partials/body.html', controller: InitApp }).
-  	when('/:app/:role/:page', {  templateUrl : '/partials/body.html', controller: InitApp }).
+  	when('/:app', {  templateUrl : '/partials/body.html', controller: initApp }).
+  	when('/:app/:role', {  templateUrl : '/partials/body.html', controller: initApp }).
+  	when('/:app/:role/:page', {  templateUrl : '/partials/body.html', controller: initApp }).
     otherwise({redirectTo: '/404'});
 
   	$httpProvider.interceptors.push(function($q, $rootScope) {

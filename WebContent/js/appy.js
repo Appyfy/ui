@@ -4,6 +4,12 @@ var appy = angular.//
 	module('appy', ['ngRoute','ngResource','ngSanitize','ngTouch','ui','ui.bootstrap','angular-carousel']).//
     config([ '$routeProvider', '$locationProvider', '$httpProvider', config ]);
 
+var _scope = function() { return $(event.target).scope(); };
+var _data = function() { return _scope().data };
+var _dataConfig = function() { return _scope().panel.data };
+var _action = function() { return _scope().field.action; };
+
+/*
 appy.directive("sparkline", function () {
 
     return {
@@ -19,7 +25,9 @@ appy.directive("sparkline", function () {
         }
     };
 });
+*/
 
+/*
 appy.directive("map", function () {
 
     return {
@@ -37,12 +45,13 @@ appy.directive("map", function () {
         }
     };
 });
+*/
 
 appy.run(function($rootScope, $http) {});
 
 $(document).ready(function() {
     $.material.init();
-    initDatabase();
+    //initDatabase();
 });
 
 

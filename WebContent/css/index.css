@@ -29,6 +29,7 @@
 #wrapper.toggled #navbar-wrapper {
     width: 200px;
     padding-left : 10px;
+    padding-right : 10px;
 }
 
 #content-wrapper {
@@ -56,11 +57,13 @@
     
     #wrapper #navbar-wrapper {
 	    padding-left : 10px;
+	    padding-right : 10px;
 	}
 	
 	#wrapper.toggled #navbar-wrapper {
         width: 0;
     	padding-left : 0px;
+    	padding-right : 0px;
     }
     
 	#content-wrapper {

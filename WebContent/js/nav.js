@@ -12,22 +12,26 @@ function NavCtrl($rootScope, $http, $scope) {
 	};
 	
 	$rootScope.toggleNavbar = function() {
-		$("#wrapper").toggleClass("toggled");
+		if($(document).width() > 768) {
+			$("#wrapper").toggleClass("toggled");
+		}
 	};
 	
 	$rootScope.navigatePage = function(pageInfo) {
 		$rootScope.loadPage(pageInfo.name, pageInfo.header);
-//		if($(document).width() < 768) {
+		if($(document).width() < 768) {
 			$rootScope.toggleNavbar();
-//		}
+		}
+	};
+	
+	$rootScope.navigatePageAction = function(params, row) {
+		$rootScope.navigatePage(row);
 	};
 
 	$rootScope.navigateBack = function() {
-//		if($rootScope.pageConfig.parentPage != null){
 		if($rootScope.pageStack.length > 0){
 			var pageInfo = $rootScope.pageStack.pop();
 			$rootScope.loadPage(pageInfo.name, pageInfo.header, true);
-//			$rootScope.loadPage($rootScope.pageConfig.parentPage);
 		}
 	};
 	
@@ -41,7 +45,7 @@ function NavCtrl($rootScope, $http, $scope) {
 	
 	var rx = /INPUT|SELECT|TEXTAREA/i;
     $(document).bind("keydown keypress", function(e) {
-    	if( ( e.altKey && e.keyCode == 37 /*back arrow*/ ) || e.keyCode == 8 /*backspace*/) {
+    	if( ( e.altKey && e.keyCode == 37 /*back arrow*/ ) || e.keyCode == 8 /*backspace*/ ) {
 	        if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly ) {
 	            e.preventDefault();
 	            $rootScope.navigateBack();
@@ -53,34 +57,36 @@ function NavCtrl($rootScope, $http, $scope) {
 		$http.get('/app.json').success(function(data) {
 			
 			$rootScope.appConfig = data;
-			
 			document.title = $rootScope.appConfig.title;
-			$rootScope.loadNav(pageName);
 			
-			if($rootScope.appConfig.navbar == "NO") {
-				if($(document).width() > 768) {
-					$rootScope.toggleNavbar();
+			if(pageName) {
+				$rootScope.loadPage(pageName);
+			} else { 
+				var homePage = $rootScope.appConfig.homePage; 
+				if(homePage) {
+					$rootScope.loadPage(homePage.name, homePage.header);
 				}
-			} else if($rootScope.appConfig.navbar == "HIDDEN") {
+			}
+
+			if($rootScope.appConfig.navbar == "HIDDEN") {
 				$rootScope.showNav = false;
 				$rootScope.toggleNavbar();
+				return;
+			} else {
+				$rootScope.loadNav(pageName);
+				if($rootScope.appConfig.navbar == "NO") {
+					$rootScope.toggleNavbar();
+				}
 			}
 		});
 	};
 	
 	$rootScope.loadNav = function(pageName) {
-		if(pageName) {
-			$rootScope.loadPage(pageName);
-		} 
+		
 		$http.get('/nav.json').success(function(data) {
-			$rootScope.navConfig = $rootScope.data['navConfig'] = data;
-			if(!pageName) {
-				var homePage = $rootScope.appConfig.homePage; 
-				if(homePage) {
-					$rootScope.loadPage(homePage.name, homePage.header);
-				} else  if($rootScope.navConfig.length > 0) {
-					$rootScope.navigatePage($rootScope.navConfig[0]);
-				}
+			$rootScope.data.navConfig = { rows : data } ;
+			if($rootScope.data.navConfig.rows.length > 0 && !$rootScope.appConfig.homePage) {
+				$rootScope.navigatePage($rootScope.data.navConfig.rows[0]);
 			}
 		});
 	};
@@ -91,8 +97,12 @@ function NavCtrl($rootScope, $http, $scope) {
 		} else {
 			$rootScope.loadPage(linkButton.page.name, linkButton.page.header);
 		}
-		
 	};
+	
+	$rootScope.openLinkAction = function(params, row) {
+		$rootScope.openLink(row);
+	};
+	
 
 	$rootScope.loadPage = function(name, header, isBack) {
 		
@@ -109,19 +119,24 @@ function NavCtrl($rootScope, $http, $scope) {
 		}
 		$rootScope.arrow = $rootScope.pageStack.length != 0;
 		
-		$rootScope.pageInfo = { "header" : header, "name" : name };
+		$rootScope.pageInfo = { "name" : name, "header" : header };
+	};
+	
+	$rootScope.loadPageAction = function(params, data) {
+		$rootScope.loadPage(params.name, params.header);
+		$rootScope.data[params.data.id] = [ data ];
 	};
 	
 	$rootScope.getPartialUrl = function(panel) {
 		if(panel.type === 'custom') {
-			return '/partials/custom/' + panel.id + '.html';
+			return '/../' + APPYSTR_BASE_URL + '/' + $rootScope.app + '/partials/' + panel.id + '.html';
 		}
 		return '/partials/' + panel.type + '.html';
 	};
 	
 	$scope.panel = { 
-		data : { id : "navConfig",  list : { heading : "header" } },
-		action : { primary : { func : "navigatePage" } }
+		data : { id : "navConfig",  heading : "header" },
+		action : { primary : { func : "navigatePageAction" } }
 	};
 	
 	$rootScope.loadApp();

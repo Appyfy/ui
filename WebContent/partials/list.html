@@ -1,25 +1,31 @@
 <div class="list-group" ng-controller="ListCtrl">
 
-	<div class="list-group-item" ng-repeat="row in data[panel.data.id]"
-		ng-click="fetchFieldChainedData(panel)">
+	<div class="list-group-item" ng-repeat="row in data.rows" ng-click="fetchFieldChainedData(panel)">
+	
 		<div class="row-action-primary">
-			<i class="material-icons"></i>
+			<i class="material-icons">
+				<img ng-if="row.path" ng-src="{{getImageURI(row)}}"/>
+			</i>
 		</div>
+	
 		<div class="row-content">
+		
 			<!-- <div class="least-content">15m</div> -->
+			<div ng-click="doAction(panel.action.primary, row)" >
+				<h1 class="list-group-item-heading" ng-bind="row[panel.data.heading]"></h1>
+				<p class="list-group-item-text" ng-bind="row[panel.data.text]"></p>
+			</div>
 			
-			<h5 class="list-group-item-heading" ng-click="doAction(panel.action.primary, row)" ng-bind="row[panel.data.list.heading]"></h5>
-			
-			<p class="list-group-item-text" ng-if="panel.data.list.text">{{row.name}}</p>
-			
-			<div class="action-secondary" ng-if="panel.action.secondary">
-				<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }"  ng-click="doAction(panel.action.secondary, row)">
+			<div class="action-secondary" ng-if="panel.action.secondary" ng-click="doAction(panel.action.secondary, row)">
+				<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }">
 					<i ng-class="{ '{{panel.action.secondary.name}}' : !row.success, 'mdi-navigation-check': row.success }"></i>
 					<div class="ripple-wrapper"></div>
 				</button>
 			</div>
 		</div>
+	
 		<div ng-if="$last == false" class="list-group-separator"></div>
+	
 	</div>
 
 </div>

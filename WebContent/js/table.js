@@ -3,9 +3,11 @@
 function TableCtrl($rootScope, $scope) {
 
 	$scope.summary = {};
-	$rootScope.calculateSummary = function() {
-		var rows = $rootScope.data[$scope.panel.data.id];
+	$rootScope.calculateSummary = function(data) {
+		$scope.data = data;
+		var rows = $scope.data.rows;
 		var columns = $scope.panel.columns;
+		if(!rows || !columns) { return; }
 		for ( var i = 0; i < rows.length; i++) {
 			for ( var j = 0; j < columns.length; j++) {
 				if(columns[j].summary) {
@@ -15,15 +17,14 @@ function TableCtrl($rootScope, $scope) {
 		}
 	};
 	
-	if($scope.panel.data.rows) {
-		$rootScope.data[$scope.panel.data.id] = $scope.panel.data.rows; 
+	if($scope.panel.data && $scope.panel.data.rows) {
+		$scope.data = { "rows" : $scope.panel.data.rows }; 
 	}
 	
-	var rows = $rootScope.data[$scope.panel.data.id];
-	if(!rows) {
+	if(!$scope.data.rows) {
 		$rootScope.fetchFieldData($scope.panel, undefined, $rootScope.calculateSummary);
 	} else {
-		$rootScope.calculateSummary();
+		$rootScope.calculateSummary($scope.data);
 	} 
 	
 }

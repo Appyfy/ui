@@ -1,0 +1,95 @@
+<!-- body.html -->
+<script type="text/ng-template" id="body.html">
+<div id="wrapper">
+	<div id="navbar-wrapper"  ng-include src='"/partials/navbar.html"' ng-controller="NavCtrl"></div>
+	<div id="content-wrapper" ng-include src='"/partials/content.html"'></div>
+</div>
+</script>
+
+<!-- content_footer.html -->
+<script type="text/ng-template" id="content_footer.html">
+<div class="col-lg-12">
+	<span class="span">&copy; 2015 <!-- GoAppyfy --></span>
+</div>
+</script>
+
+<!-- content_header.html -->
+<script type="text/ng-template" id="content_header.html">
+<div class="col-lg-12">
+
+	<!-- <div class="panel panel-default"> -->
+	<!-- <div class="panel-body"> -->
+	<a id="nav_menu"ng-click="navigate()">
+		<i ng-show="showNav && !arrow" class="mdi-navigation-menu navbar-text"></i>
+		<i ng-show="arrow" class="mdi-navigation-arrow-back navbar-text"></i>
+	</a>
+	<span class="navbar-text"> {{header}} </span>
+	<!-- <input ng-model="search" class="form-control navbar-text" id="search" type="text" placeholder="Search"> -->
+	<!-- </div> -->
+	<!-- </div> -->
+</div>
+</script>
+
+<!-- content.html -->
+<script type="text/ng-template" id="content.html">
+<div class="container-fluid">
+	<div class="1row navbar navbar-fixed-top" ng-include src='"/partials/content_header.html"'></div>
+	<!-- <div class="row navbar_placeholder navbar ui-helper-hidden"></div> -->
+	<div class="row" ng-include src='"/partials/page.html"'></div>
+	<!-- <div class="row navbar navbar-fixed-bottom" ng-include src='"partials/content_footer.html"'></div> -->
+</div>
+</script>
+
+<!-- navbar_footer.html -->
+<script type="text/ng-template" id="navbar_footer.html">
+<div class="col-lg-12">
+	<span class="span">&copy; 2015 <!-- GoAppyfy --></span>
+</div>
+</script>
+
+<!-- navbar_header.html -->
+<script type="text/ng-template" id="navbar_header.html">
+<div class="col-lg-12">
+	<a id="nav_back"><i class="mdi-navigation-arrow-back navbar-text"></i></a> 
+	<!-- <span class="navbar-text"> Local Market</span> -->
+</div>
+</script>
+
+<!-- navbar.html -->
+<script type="text/ng-template" id="navbar.html">
+<div class="container-fluid">
+	<!-- <div class="row navbar_header navbar navbar-fixed-top" ng-include src='"/partials/navbar_header.html"'></div> -->
+	<div class="row" ng-include src='"/partials/list.html"'></div>
+	<!-- <div class="row navbar navbar-material-white" ng-include src='"partials/navbar_footer.html"'></div> -->
+</div>
+</script>
+
+<!-- preview.html -->
+<script type="text/ng-template" id="preview.html">
+<div class="row">
+<div class="col-xs-12 col-sm-6" ng-repeat="row in data[panel.data.id]">
+	<h3 class="panel-title">{{row.name}}</h3>
+	<div class="panel panel-default">
+		<div class="panel-body slider">
+			<img src="{{getImageURI(row)}}" ></img>
+		</div>
+	</div>
+</div>
+</div>
+</script>
+
+<!-- preview.html -->
+<script type="text/ng-template" id="preview.html">
+<div class="row">
+<div ng-controller="SliderCtrl" class="slider">
+    <!-- <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides"> -->
+      <!-- <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id"> -->
+        <img id="slider{{slide.id}}"ng-src="{{slide.image}}">
+        <div class="carousel-caption">
+          <p>{{slide.text}}</p>
+        </div>
+      <!-- </uib-slide> -->
+    <!-- </uib-carousel> -->
+</div>
+</div>
+</script>

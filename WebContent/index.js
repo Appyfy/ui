@@ -24,7 +24,7 @@ injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/material/css/ripples.css");
 
 //injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/themes/material/plugins/datetimepicker.css");
 
-injectCSS(APPYCDN_BASE_URL + "/lib/font-awesome/3.2.1/css/font-awesome.css");
+injectCSS(APPYCDN_BASE_URL + "/lib/font-awesome/4.3.0/css/font-awesome.css");
  	
 injectCSS(APPYUI_BASE_URL + "/css/bootstrap-override.css");
 injectCSS(APPYUI_BASE_URL + "/css/navbar.css");
@@ -43,7 +43,7 @@ injectJS(APPYCDN_BASE_URL + "/lib/jquery/js/jquery-ui-1.9.2.js");
 //injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/forms/select2/select2.js");
 injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/jquery.sparkline.js");
 
-//injectJS(APPYCDN_BASE_URL + "/lib/misc/moment.js");
+injectJS(APPYCDN_BASE_URL + "/lib/misc/moment.js");
 //injectJS(APPYCDN_BASE_URL + "/lib/misc/moment-with-locales.min.js");
 
 //injectJS(APPYCDN_BASE_URL + "/lib/bootstrap/v2.2.2/js/bootstrap.js");
@@ -89,8 +89,6 @@ defer(ngMod, 'ui.bootstrap',function() {
 injectJS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-carousel.js");
 defer(ngMod, 'angular-carousel', function() {
 
-injectJS(APPYUI_BASE_URL + "/js/app.js");
-
 function ctrl(name) {
 	try {
 		return eval(name);
@@ -110,13 +108,17 @@ defer(ctrl, 'DataCtrl', function() {
 
 injectJS(APPYUI_BASE_URL + "/js/list.js");
 injectJS(APPYUI_BASE_URL + "/js/table.js");
+injectJS(APPYUI_BASE_URL + "/js/form.js");
 
 injectJS(APPYUI_BASE_URL + "/js/slider.js");
 
 injectJS(APPYUI_BASE_URL + "/js/appy.js");
 defer(ngMod, 'appy', function() {
 
+injectJS(APPYUI_BASE_URL + "/js/vis.js");
+
 angular.bootstrap(document, ['appy']);
+$('#loader').hide();
 
 });// appy
 
