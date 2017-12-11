@@ -35,7 +35,11 @@
 			
 			<input ng-switch-when="date" ng-datetime-picker="dd-mm-yyy" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="datetime" placeholder="{{field.placeholder}}">
 			
-			<input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}" placeholder="{{field.placeholder}}">
+			<!-- <input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}" placeholder="{{field.placeholder}}"> -->
+			<div ng-switch-when="text" class="form-control-wrapper">
+				<input type="text" class="form-control empty" ng-model="data[field.id]" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}">
+				<div class="floating-label">{{field.placeholder}}</div>
+			</div>
 			
 			<textarea rows="{{field.rows || 10}}" ng-switch-when="textarea" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="{{field.type}}" placeholder="{{field.placeholder}}" ></textarea>
 			

@@ -20,6 +20,10 @@ body {
   background-image: linear-gradient(black, black), linear-gradient(#d2d2d2, #d2d2d2) !important;
 }
 
+.form-control {
+  margin-top: 13px;
+}
+
 .list-group {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
