@@ -46,7 +46,12 @@
 
 .page {
 	padding-right: 5px;
-    padding-left: 5px	
+    padding-left: 5px
+}
+
+.form-content {
+  max-height: 460px;
+  overflow-y: scroll;
 }
 
 @media(min-width:768px) {

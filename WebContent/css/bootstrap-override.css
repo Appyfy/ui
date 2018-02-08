@@ -21,7 +21,8 @@ body {
 }
 
 .form-control {
-  margin-top: 13px;
+  margin-top: 7px;
+  margin-bottom: 7px;
 }
 
 .list-group {

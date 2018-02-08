@@ -122,7 +122,7 @@ function DataCtrl($rootScope, $http) {
 	};
 	
 	// Action
-	$rootScope.doAction = function(action, row) {
+	$rootScope.doAction = function(action, row, scope) {
 		if (row.success) {
 			return;
 		}
@@ -130,7 +130,7 @@ function DataCtrl($rootScope, $http) {
 			var func = action.func;
 			var funcDef = $rootScope[func] || eval(func);
 			if (funcDef) {
-				funcDef(action.params, row);
+				funcDef(action.params, row, scope);
 			}
 		} catch (error) {
 			console.log(error.message);

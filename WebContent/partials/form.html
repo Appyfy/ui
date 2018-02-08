@@ -1,5 +1,9 @@
 <form role="form" ng-controller="FormCtrl">
 
+	<!-- Start Form Content -->
+	<div class="form-content">
+
+	<!-- Start Fields -->
 	<div ng-repeat="field in panel.fields">
 	
 		<ng-switch on="field.type">
@@ -18,9 +22,9 @@
 			
 			<img ng-switch-when="thumbnail" src="{{getImageURI(field)}}" id="{{field.id}}" height="50px"></img>
 		
-			<select ng-switch-when="select" ng-model="data[field.id]" class="form-control" id="{{field.id}}" 
+			<select ng-switch-when="select" ng-model="data[field.id]" class="form-control input-lg" id="{{field.id}}" 
 				ng-init="fetchLookupData(field)" ng-change="fetchLookupChainedData(field)">
-				<option value="" disabled> Select {{field.label}}</option>
+				<option value="" disabled class="floating-label">{{field.placeholder}}</option>
 				<option ng-repeat="option in data[field.data.id]">{{option.name}}</option>
 			</select>
 		
@@ -37,7 +41,7 @@
 			
 			<!-- <input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}" placeholder="{{field.placeholder}}"> -->
 			<div ng-switch-when="text" class="form-control-wrapper">
-				<input type="text" class="form-control empty" ng-model="data[field.id]" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}">
+				<input type="text" class="form-control input-lg empty" ng-model="data[field.id]" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}">
 				<div class="floating-label">{{field.placeholder}}</div>
 			</div>
 			
@@ -70,22 +74,28 @@
 		</ng-switch>
 	
 	</div>
+	<!-- End Fields -->
 	
+	</div>
+	<!-- End Form Content -->
 	
-	<div class="form-group col-xs-12" ng-if="panel.mode == 'edit'">
-		<hr>
-		<div class="navbar-fixed-bottom" style="padding-left: 10px; padding-right: 10px;">
+	<!-- Start Actions  -->
+	<div class="form-group col-xs-12" ng-if="pageConfig.mode == 'edit'">
+		<!-- <hr> -->
+		<!-- <div class="navbar-fixed-bottom" style="padding-left: 10px; padding-right: 10px;"> -->
 		<button class="col-xs-12 col-sm-6 col-md-4 col-lg-3 btn btn-raised btn-default btn-success" ng-click="doSave(panel)">
 			<div class="ripple-wrapper"></div>Submit
 		</button>
-		</div>
+		<!-- </div> -->
 	</div>
 	
-	<div class="form-group col-xs-12" ng-if="panel.mode == 'search'">
-		<hr>
+	<div class="form-group col-xs-12" ng-if="pageConfig.mode == 'search'">
+		<!-- <hr> -->
 		<button class="col-xs-12 col-sm-6 col-md-4 col-lg-3 btn btn-raised btn-default btn-success" ng-click="doSearch(panel)">
 			<div class="ripple-wrapper"></div>Search
 		</button>
 	</div>
-
+	<!-- End Actions  -->
+	
+	
 </form>

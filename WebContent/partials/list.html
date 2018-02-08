@@ -1,31 +1,38 @@
 <div class="list-group" ng-controller="ListCtrl">
 
-	<div class="list-group-item" ng-repeat="row in data.rows" ng-click="fetchFieldChainedData(panel)">
-	
-		<div class="row-action-primary">
-			<i class="material-icons">
-				<img ng-if="row.path" ng-src="{{getImageURI(row)}}"/>
-			</i>
-		</div>
-	
-		<div class="row-content">
+	<div ng-repeat="row in data.rows">
 		
-			<!-- <div class="least-content">15m</div> -->
-			<div ng-click="doAction(panel.action.primary, row)" >
-				<h1 class="list-group-item-heading" ng-bind="row[panel.data.heading]"></h1>
-				<p class="list-group-item-text" ng-bind="row[panel.data.text]"></p>
-			</div>
+		<a class="list-group-item" ng-click="fetchFieldChainedData(panel)" data-toggle="collapse" href="#{{row.name}}">
 			
-			<div class="action-secondary" ng-if="panel.action.secondary" ng-click="doAction(panel.action.secondary, row)">
-				<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }">
-					<i ng-class="{ '{{panel.action.secondary.name}}' : !row.success, 'mdi-navigation-check': row.success }"></i>
-					<div class="ripple-wrapper"></div>
-				</button>
+			<div class="row-action-primary">
+				<i class="material-icons">
+					<img ng-if="row.path" ng-src="{{getImageURI(row)}}"/>
+				</i>
 			</div>
+
+			<div class="row-content">
+	
+				<div ng-click="doAction(panel.action.primary, row)" >
+					<h1 class="list-group-item-heading" ng-bind="row[panel.data.heading]"></h1>
+					<p class="list-group-item-text" ng-bind="row[panel.data.text]"></p>
+				</div>	
+				
+				<div class="action-secondary" ng-if="panel.action.secondary" ng-click="doAction(panel.action.secondary, row)">
+					<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" ng-class="{ 'btn-success': row.success }">
+						<i ng-class="{ '{{panel.action.secondary.name}}' : !row.success, 'mdi-navigation-check': row.success }"></i>
+						<div class="ripple-wrapper"></div>
+					</button>
+				</div>
+			</div>
+		
+		</a>
+
+		<div ng-if="row.links" id="{{row.name}}" class="panel-collapse collapse" style="padding-left: 58px">
+			<ng-include src='"/partials/sub_list.html"'></ng-include>	
 		</div>
-	
+
 		<div ng-if="$last == false" class="list-group-separator"></div>
-	
+		
 	</div>
 
 </div>

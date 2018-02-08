@@ -1,19 +1,22 @@
 <!-- Start Page -->
 <div class="1container-fluid page">
 
+	<!-- Page Header  -->
+	<!-- <h2 ng-if="pageConfig.header" class="1text-center">{{pageConfig.header}}</h2> -->
+	
 	<!-- Start Rows -->
 	<div ng-repeat="row in pageConfig.rows" class="1row" >
-	
+
 		<!-- Start Columns -->
 		<div ng-repeat="column in row.columns" 
 			ng-class="{ 'col-sm-{{column.size}}' : column.size ,'col-sm-offset-{{column.offset}}' : column.offset }" >
-
-			<h3 class="panel-title">{{column.header}}</h3>
+			
+			<h3 ng-if="column.header" class="">{{column.header}}</h3>
 			
 			<!-- Start Panel -->
 			<div ng-repeat="panel in column.panels">
 
-				<h3 class="panel-title">{{panel.header}}</h3>
+				<h4 ng-if="panel.header" class="">{{panel.header}}</h4>
 							
 				<div ng-class="{ 'panel panel-default' : panel.shadow!='off' }" ng-if="panel.type">
 					<div class="panel-body">

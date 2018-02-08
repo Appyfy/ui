@@ -1,8 +1,8 @@
 <div ng-controller="TableCtrl">
 	
-	<input ng-if="panel.refresh" class="col-xs-12 col-sm-4 col-md-4 col-lg-3 btn btn-raised btn-default btn-success" type="button" value="Refresh" ng-click="fetchFieldData(panel)">
+	<!-- <input ng-if="panel.refresh" class="col-xs-12 col-sm-4 col-md-4 col-lg-3 btn btn-raised btn-default btn-success" type="button" value="Refresh" ng-click="fetchFieldData(panel)"> -->
 
-	<table class="table" id="{{panel.id}}" ng-if="data.rows">
+	<table class="table" id="{{panel.id}}" 1ng-if="data.rows">
 		
 		<thead>
 			<tr><th ng-repeat="column in panel.columns" ng-bind="column.header"></th><th ng-if="panel.action.secondary">Process</th></tr>
@@ -10,11 +10,11 @@
 		
 		<tbody>
 			<tr ng-repeat="row in data.rows">
-				<td ng-repeat="column in panel.columns" ng-bind="row[column.name]"></td>
+				<td ng-repeat="column in panel.columns" ng-bind="row.fields[column.name]"></td>
 				<td>
 				<div class="action-secondary" ng-if="panel.action.secondary">
 					<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" 
-							ng-class="{ 'btn-success': row.success }"  ng-click="doAction(panel.action.secondary,row)">
+							ng-class="{ 'btn-success': row.success }"  ng-click="doAction(panel.action.secondary, row, this)">
 						<i ng-class="{ '{{panel.action.secondary.name}}' : !row.success, 'mdi-navigation-check': row.success }"></i>
 						<div class="ripple-wrapper"></div>
 					</button>

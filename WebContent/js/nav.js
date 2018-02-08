@@ -1,20 +1,20 @@
 'use strict';
 
 function NavCtrl($rootScope, $http, $scope) {
-	
+
 	$rootScope.showNav = true;
 	$rootScope.arrow = false;
 	$rootScope.header = "";
 	$rootScope.pageStack = [];
 	
-	$rootScope.setHeader = function(header) { 
+	$rootScope.setHeader = function(header) {
 		$rootScope.header = header;
 	};
 	
 	$rootScope.toggleNavbar = function() {
-		if($(document).width() > 768) {
+//		if($(document).width() > 768) {
 			$("#wrapper").toggleClass("toggled");
-		}
+//		}
 	};
 	
 	$rootScope.navigatePage = function(pageInfo) {

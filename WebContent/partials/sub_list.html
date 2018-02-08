@@ -1,0 +1,14 @@
+<div class="list-group">
+  	<div ng-repeat="link in row.links">
+	    <div class="list-group-item" ng-click="doAction(panel.action.primary, link)" >
+<!-- 			
+			<div class="row-action-primary">
+				<i class="material-icons">
+				<img ng-if="row.path" ng-src="{{getImageURI(link)}}"/>
+				</i>
+			</div>
+-->
+			<h4 class="1list-group-item-heading" ng-bind="link[panel.data.heading]"></h4>
+		</div>
+	</div>
+</div>

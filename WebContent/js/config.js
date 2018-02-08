@@ -4,6 +4,11 @@ function initApp($routeParams, $rootScope) {
 
 	$rootScope.app = $routeParams.app;
 	$rootScope.role = $routeParams.role || 'index';
+	$rootScope.page = $routeParams.page;
+	
+	if($routeParams.page){
+		$rootScope.loadPage($rootScope.page);
+	}
 	
 	try {
 		injectJS(APPYSTR_BASE_URL + '/' + $rootScope.app + '/app.js');

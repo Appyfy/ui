@@ -8,14 +8,14 @@ function FormCtrl($rootScope, $scope) {
 	};
 
 	if($scope.panel.data){
-	if($scope.panel.data.type == 'edit' || $scope.panel.data.type == 'view') {
-		if($scope.panel.data.params) {
-			$scope.panel.data.params.date = moment().format("DD-MM-YYYY");
-			$rootScope.fetchFieldData($scope.panel, undefined, $rootScope.populateFormData);
-		} else {
-			$rootScope.populateFormData();
-		}
-	}
+//		if($scope.panel.data.type == 'edit' || $scope.panel.data.type == 'view') {
+//			if($scope.panel.data.params) {
+//				$scope.panel.data.params.date = moment().format("DD-MM-YYYY");
+//				$rootScope.fetchFieldData($scope.panel, undefined, $rootScope.populateFormData);
+//			} else {
+				$rootScope.populateFormData();
+//			}
+//		}
 	}
 	
 	$rootScope.serializeFormData = function() {
