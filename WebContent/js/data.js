@@ -3,8 +3,8 @@
 function DataCtrl($rootScope, $http) {
 
 	$rootScope.data = {};
-	$rootScope.WebSQLSB = new WebSQLDB();
-	$rootScope.WebSQLSB.init();
+//	$rootScope.WebSQLSB = new WebSQLDB();
+//	$rootScope.WebSQLSB.init();
 	
 	// Value
 	$rootScope.setValue = function(id, value) {
@@ -57,8 +57,6 @@ function DataCtrl($rootScope, $http) {
 		}
 		var id = _dataConfig().id;
 		$http.post(url, _data(), { params : _action().params }).success(function(data){
-			delete $rootScope.data[id];
-			$rootScope.data[id] = data;
 			if(callback) {
 				callback(data);
 			}
@@ -97,7 +95,7 @@ function DataCtrl($rootScope, $http) {
 	// Lookup
 	$rootScope.fetchLookupData = function(field, value) {
 		$rootScope.fetchFieldData(field, value);
-		$rootScope.resetValue(field.id);
+//		$rootScope.resetValue(field.id);
 	};
 
 	$rootScope.fetchLookupChainedData = function(field) {

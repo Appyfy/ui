@@ -1,10 +1,19 @@
 'use strict';
 
-function FormCtrl($rootScope, $scope) {
+function FormCtrl($rootScope, $scope, $timeout) {
 
-	$rootScope.populateFormData = function(data) {
-		$scope.data = $rootScope.data[$scope.panel.data.id][0] || {};
-		$scope.data = angular.extend($scope.data, $scope.data.fields);
+	$rootScope.populateFormData = function() {
+		if($rootScope.action ==='EDIT') {
+			var data = $rootScope.data[$scope.panel.data.id];
+			if(!data) return;
+			$rootScope.formData = data[0] || {};
+			$rootScope.formData = angular.extend($scope.formData, $scope.formData.fields);
+		} else {
+			$rootScope.formData = {};
+		}
+		
+		$timeout(function(){$('input').trigger('change')},100);	
+		
 	};
 
 	if($scope.panel.data){
@@ -22,15 +31,15 @@ function FormCtrl($rootScope, $scope) {
 		var scope = $(event.target).scope();
 
 		var obj = { "fields" : {} };
-		if(scope.data.ID) {
-			obj.ID = scope.data.ID;
+		if(scope.formData.ID) {
+			obj.ID = scope.formData.ID;
 		}
 		if (scope.panel.data.params) {
 			obj = angular.extend(obj, scope.panel.data.params);
 		}
 
 		$.each(scope.panel.fields, function(indx, field) {
-			var value = scope.data[field.id];
+			var value = scope.formData[field.id];
 			if (value) {
 				obj.fields[field.id] = value;
 			}

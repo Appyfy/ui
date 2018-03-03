@@ -18,6 +18,7 @@ function NavCtrl($rootScope, $http, $scope) {
 	};
 	
 	$rootScope.navigatePage = function(pageInfo) {
+		$rootScope.action = 'NAVIGATE';
 		$rootScope.loadPage(pageInfo.name, pageInfo.header);
 		if($(document).width() < 768) {
 			$rootScope.toggleNavbar();
@@ -57,7 +58,9 @@ function NavCtrl($rootScope, $http, $scope) {
 		$http.get('/app.json').success(function(data) {
 			
 			$rootScope.appConfig = data;
+
 			document.title = $rootScope.appConfig.title;
+			$rootScope.setHeader($rootScope.appConfig.title);
 			
 			if(pageName) {
 				$rootScope.loadPage(pageName);
@@ -85,9 +88,6 @@ function NavCtrl($rootScope, $http, $scope) {
 		
 		$http.get('/nav.json').success(function(data) {
 			$rootScope.data.navConfig = { rows : data } ;
-			if($rootScope.data.navConfig.rows.length > 0 && !$rootScope.appConfig.homePage) {
-				$rootScope.navigatePage($rootScope.data.navConfig.rows[0]);
-			}
 		});
 	};
 	
@@ -99,32 +99,29 @@ function NavCtrl($rootScope, $http, $scope) {
 		}
 	};
 	
-	$rootScope.openLinkAction = function(params, row) {
-		$rootScope.openLink(row);
-	};
-	
-
-	$rootScope.loadPage = function(name, header, isBack) {
+	$rootScope.loadPage = function(name, header, isBack, callback) {
 		
 		if(header) {
 			$rootScope.setHeader(header);
 		}
 		
 		$http.get('/pages/' + name + '.json').success(function(data) {
+			
 			$rootScope.pageConfig = data;
+			
+			if(!isBack && $rootScope.pageInfo) {
+				$rootScope.pageStack.push($rootScope.pageInfo);
+			}
+			
+			$rootScope.arrow = $rootScope.pageStack.length != 0;
+			
+			header = header || $rootScope.pageConfig.header;
+			
+			$rootScope.pageInfo = { "name" : name, "header" : header };
+				
+			if(callback) { callback($rootScope.pageConfig); }
 		});
 		
-		if(!isBack && $rootScope.pageInfo) {
-			$rootScope.pageStack.push($rootScope.pageInfo);
-		}
-		$rootScope.arrow = $rootScope.pageStack.length != 0;
-		
-		$rootScope.pageInfo = { "name" : name, "header" : header };
-	};
-	
-	$rootScope.loadPageAction = function(params, data) {
-		$rootScope.loadPage(params.name, params.header);
-		$rootScope.data[params.data.id] = [ data ];
 	};
 	
 	$rootScope.getPartialUrl = function(panel) {
@@ -134,7 +131,7 @@ function NavCtrl($rootScope, $http, $scope) {
 		return '/partials/' + panel.type + '.html';
 	};
 	
-	$scope.panel = { 
+	$scope.panel = {
 		data : { id : "navConfig",  heading : "header" },
 		action : { primary : { func : "navigatePageAction" } }
 	};

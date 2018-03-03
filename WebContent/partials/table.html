@@ -5,12 +5,18 @@
 	<table class="table" id="{{panel.id}}" 1ng-if="data.rows">
 		
 		<thead>
-			<tr><th ng-repeat="column in panel.columns" ng-bind="column.header"></th><th ng-if="panel.action.secondary">Process</th></tr>
+			<tr>
+			<!-- <th><input type="checkbox"></th> -->
+			<th ng-repeat="column in panel.columns" ng-bind="column.header"></th>
+			<th ng-if="panel.action.secondary">Process</th></tr>
 		</thead>
 		
 		<tbody>
 			<tr ng-repeat="row in data.rows">
-				<td ng-repeat="column in panel.columns" ng-bind="row.fields[column.name]"></td>
+				<!-- <td><input type="checkbox" value="{{$index}}"></td> -->
+				<td ng-repeat="column in panel.columns">
+					<div>{{column.expr ? row.fields[column.name][column.expr] : row.fields[column.name]}}</div>
+				</td>
 				<td>
 				<div class="action-secondary" ng-if="panel.action.secondary">
 					<button class="btn btn-fab btn-fab-mini btn-raised btn-sm" 

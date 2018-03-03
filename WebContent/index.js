@@ -10,6 +10,7 @@ injectCSS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-ui.css");
 
 injectCSS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-carousel.css");
 //injectCSS(APPYCDN_BASE_URL + "/lib/angular/ui/ng-grid/ng-grid.css");
+injectCSS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-ui-select.css");
 
 //injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/v2.2.2/css/bootstrap.css");
 //injectCSS(APPYCDN_BASE_URL + "/lib/bootstrap/v2.2.2/css/bootstrap-responsive.css");
@@ -40,7 +41,6 @@ defer(winLib, 'jQuery', function() {
 	
 injectJS(APPYCDN_BASE_URL + "/lib/jquery/js/jquery-ui-1.9.2.js");
 //injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/forms/validation/jquery.validate.js");
-//injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/forms/select2/select2.js");
 injectJS(APPYCDN_BASE_URL + "/lib/jquery/plugins/jquery.sparkline.js");
 
 injectJS(APPYCDN_BASE_URL + "/lib/misc/moment.js");
@@ -89,6 +89,9 @@ defer(ngMod, 'ui.bootstrap',function() {
 injectJS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-carousel.js");
 defer(ngMod, 'angular-carousel', function() {
 
+injectJS(APPYCDN_BASE_URL + "/lib/angular/ui/angular-ui-select.js");
+defer(ngMod, 'ui.select', function() {
+
 function ctrl(name) {
 	try {
 		return eval(name);
@@ -126,15 +129,16 @@ $('#loader').hide();
 });// nav
 });// config
 
-});// route
-});// resource
-});// sanitize
-});// touch
 });// animate
+});// touch
+});// sanitize
+});// resource
+});// route
 
-});// ui
-});// ui.bootstrap
+});// ui.select
 });// carousel
+});// ui.bootstrap
+});// ui
 
 });// angular
 

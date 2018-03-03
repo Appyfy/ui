@@ -36,7 +36,7 @@ function config($routeProvider, $locationProvider, $httpProvider) {
   		return {
   			'request': function(request) {
   				
-  				if(request.url.endsWith(".html")) {
+  				if(request.url.startsWith("/partials")) {
   					request.url = APPYUI_BASE_URL + request.url; 
   				} else if(request.url.endsWith(".json")) {
   					request.url = APPYSTR_BASE_URL + '/' + $rootScope.app + '/' + $rootScope.role + request.url; 

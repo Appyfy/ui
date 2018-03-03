@@ -12,9 +12,9 @@
 			
 			<label ng-if="field.label">{{field.label}}</label>
 			
-			<label ng-switch-when="label" id="{{field.id}}">{{data[field.id]}}</label>
+			<label ng-switch-when="label" id="{{field.id}}">{{formData[field.id]}}</label>
 
-			<p ng-switch-when="para" ng-bind-html="data[field.id]" class="text-justify" id="{{field.id}}"></p>
+			<p ng-switch-when="para" ng-bind-html="formData[field.id]" class="text-justify" id="{{field.id}}"></p>
 
 			<h2 ng-switch-when="header">{{field.text}}</h2>
 
@@ -22,10 +22,11 @@
 			
 			<img ng-switch-when="thumbnail" src="{{getImageURI(field)}}" id="{{field.id}}" height="50px"></img>
 		
-			<select ng-switch-when="select" ng-model="data[field.id]" class="form-control input-lg" id="{{field.id}}" 
-				ng-init="fetchLookupData(field)" ng-change="fetchLookupChainedData(field)">
-				<option value="" disabled class="floating-label">{{field.placeholder}}</option>
-				<option ng-repeat="option in data[field.data.id]">{{option.name}}</option>
+			<select ng-switch-when="select" ng-model="formData[field.id]" class="form-control form-control-wrapper input-lg" id="{{field.id}}" 
+				ng-init="fetchLookupData(field)" ng-change="fetchLookupChainedData(field)"
+				ng-options="option.name for option in data[field.data.id] track by option.code">
+				<option value="" disabled></option>
+				<!--  <option ng-repeat="option in data[field.data.id]" value="{{option.code}}">{{option.name}}</option> -->
 			</select>
 		
 			<a ng-switch-when="link_button" ng-click="openLink(field)" href="" target="{{field.target}}" class="btn btn-raised btn-default btn-success" id="{{field.id}}"> 
@@ -37,17 +38,34 @@
 				<span class="badge" ng-if="field.badge" ng-bind="data[field.badge]"></span>
 			</button>
 			
-			<input ng-switch-when="date" ng-datetime-picker="dd-mm-yyy" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="datetime" placeholder="{{field.placeholder}}">
+			<input ng-switch-when="date" ng-datetime-picker="dd-mm-yyy" ng-model="formData[field.id]" class="form-control" id="{{field.id}}" type="datetime" placeholder="{{field.placeholder}}">
 			
-			<!-- <input ng-switch-when="text" ng-model="data[field.id]" class="form-control" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}" placeholder="{{field.placeholder}}"> -->
 			<div ng-switch-when="text" class="form-control-wrapper">
-				<input type="text" class="form-control input-lg empty" ng-model="data[field.id]" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}">
+				<input type="text" class="form-control input-lg empty" ng-model="formData[field.id]" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}">
 				<div class="floating-label">{{field.placeholder}}</div>
 			</div>
+<!-- 			
+			<div ng-switch-when="lookup" class="form-control-wrapper">
+				<input type="text" class="form-control input-lg empty" ng-model="formData[field.id]" id="{{field.id}}" value="{{field.value}}" type="{{field.type}}"
+				ng-init="fetchLookupData(field)" ng-change="fetchLookupChainedData(field)"
+				typeahead="option as option for option in data[field.data.id]" typeahead-template-url="customTemplate.html">
+				<div class="floating-label">{{field.placeholder}}</div>
+			</div>
+ -->
+			<div ng-switch-when="lookup" class="1form-control-wrapper">
+				<ui-select ng-model="formData[field.id]">
+    			<ui-select-match>
+        			<span ng-bind="$select.selected.name"></span>
+    			</ui-select-match>
+    			<ui-select-choices repeat="option in data[field.data.id]">
+        			<span ng-bind="option.name"></span>
+    			</ui-select-choices>
+  				</ui-select>
+			</div>
 			
-			<textarea rows="{{field.rows || 10}}" ng-switch-when="textarea" ng-model="data[field.id]" class="form-control" id="{{field.id}}" type="{{field.type}}" placeholder="{{field.placeholder}}" ></textarea>
+			<textarea rows="{{field.rows || 10}}" ng-switch-when="textarea" ng-model="formData[field.id]" class="form-control" id="{{field.id}}" type="{{field.type}}" placeholder="{{field.placeholder}}" ></textarea>
 			
-			<sparkline ng-switch-when="sparkline" data="{{data[field.id]}}" id="{{field.id}}"></sparkline>
+			<sparkline ng-switch-when="sparkline" data="{{formData[field.id]}}" id="{{field.id}}"></sparkline>
 			
 			<map ng-switch-when="map" id="{{field.id}}" style="width:500px;height:380px;"></map>
 
@@ -99,3 +117,9 @@
 	
 	
 </form>
+
+<script type="text/ng-template" id="customTemplate.html">
+	<a>
+		<span>{{match.model.fields.name}}</span>
+	</a>
+</script>
