@@ -1,5 +1,19 @@
 <div class="container-fluid">
 	<!-- <div class="row navbar_header navbar navbar-fixed-top" ng-include src='"/partials/navbar_header.html"'></div> -->
+	
+	<ng-switch on="appConfig.navbar">
+	
+	<div ng-switch-when="TOP">
+	<div class="row" ng-include src='"/partials/menu.html"'></div>
+    </div>
+	
+	<div ng-switch-when="NONE"></div>
+
+	<div ng-switch-default>
 	<div class="row" ng-include src='"/partials/list.html"'></div>
+	</div>
+	
+	</ng-switch>
+	
 	<!-- <div class="row navbar navbar-material-white" ng-include src='"partials/navbar_footer.html"'></div> -->
 </div>

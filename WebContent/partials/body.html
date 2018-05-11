@@ -1,5 +1,5 @@
 
 <div id="wrapper">
-	<div id="navbar-wrapper"  ng-include src='"/partials/navbar.html"' ng-controller="NavCtrl"></div>
-	<div id="content-wrapper" ng-include src='"/partials/content.html"'></div>
+	<div id="navbar-wrapper"  ng-include src='"/partials/navbar.html"' ng-controller="NavCtrl" ng-class="{ 'navbar-top' : appConfig.navbar == 'TOP' }"></div>
+	<div id="content-wrapper" ng-include src='"/partials/content.html"' ng-class="{ 'navbar-top' : appConfig.navbar == 'TOP' }"></div>
 </div>

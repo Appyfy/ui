@@ -3,11 +3,13 @@
 	<!-- <div class="panel panel-default"> -->
 	<!-- <div class="panel-body"> -->
 	<a id="nav_menu"ng-click="navigate()">
-		<i ng-show="showNav && !arrow" class="mdi-navigation-menu navbar-text"></i>
-		<i ng-show="arrow" class="mdi-navigation-arrow-back navbar-text"></i>
+		<i ng-show="appConfig.showNav && !arrow" class="mdi-navigation-menu navbar-text"></i>
+		<i ng-show="appConfig.usepageStack && arrow" class="mdi-navigation-arrow-back navbar-text"></i>
 	</a>
 	
-	<span class="navbar-text"> {{header}} </span>
+	<img src="logo-invert-small.png" class="navbar-text"></img>
+	
+	<span class="navbar-brand"> {{header}} </span>
 	
 	<!-- <input ng-model="search" class="form-control navbar-text" id="search" type="text" placeholder="Search"> -->
 

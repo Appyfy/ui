@@ -1,0 +1,9 @@
+<div class="nav-scroller bg-white box-shadow">
+  <nav class="nav nav-underline">
+  
+	<span ng-repeat="navItem in data.navConfig.rows" class="nav-link" ng-class="{ active : $index == 0}" ng-click="navigatePage(navItem)">
+	{{navItem.header}}
+	</span>
+	
+  </nav>
+</div>

@@ -9,6 +9,8 @@ var _data = function() { return _scope().data };
 var _dataConfig = function() { return _scope().panel.data };
 var _action = function() { return _scope().field.action; };
 
+String.prototype.replaceAll = function(target, replacement) { return this.split(target).join(replacement);};
+
 /*
 appy.directive("sparkline", function () {
 
@@ -47,12 +49,18 @@ appy.directive("map", function () {
 });
 */
 
-appy.run(function($rootScope, $http) {});
+appy.run(function($rootScope, $http) {
+
+    $rootScope.injectJS = injectJS;
+    $rootScope.injectCSS = injectCSS;
+    
+});
 
 $(document).ready(function() {
     $.material.init();
     //initDatabase();
 });
+
 
 
 /*

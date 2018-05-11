@@ -2,7 +2,6 @@
 
 function NavCtrl($rootScope, $http, $scope) {
 
-	$rootScope.showNav = true;
 	$rootScope.arrow = false;
 	$rootScope.header = "";
 	$rootScope.pageStack = [];
@@ -58,6 +57,15 @@ function NavCtrl($rootScope, $http, $scope) {
 		$http.get('/app.json').success(function(data) {
 			
 			$rootScope.appConfig = data;
+			
+			if($rootScope.appConfig.usePageStack === undefined) {
+				$rootScope.appConfig.usePageStack = true;
+			}
+			
+			if($rootScope.appConfig.showNav === undefined) {
+				$rootScope.appConfig.showNav =  true;
+		    }
+
 
 			document.title = $rootScope.appConfig.title;
 			$rootScope.setHeader($rootScope.appConfig.title);
@@ -71,20 +79,18 @@ function NavCtrl($rootScope, $http, $scope) {
 				}
 			}
 
-			if($rootScope.appConfig.navbar == "HIDDEN") {
-				$rootScope.showNav = false;
-				$rootScope.toggleNavbar();
-				return;
+			if($rootScope.appConfig.navbar == "NONE") {
+				$rootScope.appConfig.showNav = false;
 			} else {
-				$rootScope.loadNav(pageName);
-				if($rootScope.appConfig.navbar == "NO") {
+				$rootScope.loadNav();
+				if($rootScope.appConfig.navbar == "HIDDEN") {
 					$rootScope.toggleNavbar();
 				}
 			}
 		});
 	};
 	
-	$rootScope.loadNav = function(pageName) {
+	$rootScope.loadNav = function() {
 		
 		$http.get('/nav.json').success(function(data) {
 			$rootScope.data.navConfig = { rows : data } ;
@@ -102,14 +108,14 @@ function NavCtrl($rootScope, $http, $scope) {
 	$rootScope.loadPage = function(name, header, isBack, callback) {
 		
 		if(header) {
-			$rootScope.setHeader(header);
+			//$rootScope.setHeader(header);
 		}
 		
 		$http.get('/pages/' + name + '.json').success(function(data) {
 			
 			$rootScope.pageConfig = data;
 			
-			if(!isBack && $rootScope.pageInfo) {
+			if($rootScope.appConfig.usePageStack && !isBack && $rootScope.pageInfo) {
 				$rootScope.pageStack.push($rootScope.pageInfo);
 			}
 			
@@ -118,17 +124,25 @@ function NavCtrl($rootScope, $http, $scope) {
 			header = header || $rootScope.pageConfig.header;
 			
 			$rootScope.pageInfo = { "name" : name, "header" : header };
+
+            $rootScope.injectPanelJS({id : name});
 				
 			if(callback) { callback($rootScope.pageConfig); }
+			
 		});
 		
 	};
 	
 	$rootScope.getPartialUrl = function(panel) {
 		if(panel.type === 'custom') {
-			return '/../' + APPYSTR_BASE_URL + '/' + $rootScope.app + '/partials/' + panel.id + '.html';
+			return '' + APPYSTR_BASE_URL + '/' + $rootScope.app + '/' + $rootScope.role + '/partials/' + panel.id + '.html';
 		}
 		return '/partials/' + panel.type + '.html';
+	};
+	
+	$rootScope.injectPanelJS = function(panel) {
+		var jsUrl = '' + APPYSTR_BASE_URL + '/' + $rootScope.app + '/' + $rootScope.role + '/js/' + panel.id + '.js';
+		injectJS(jsUrl, 'panelJS');
 	};
 	
 	$scope.panel = {
