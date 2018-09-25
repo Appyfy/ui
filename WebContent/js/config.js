@@ -29,7 +29,7 @@ function config($routeProvider, $locationProvider, $httpProvider) {
   	when('/:app', {  templateUrl : '/partials/body.html', controller: initApp }).
   	when('/:app/:role', {  templateUrl : '/partials/body.html', controller: initApp }).
   	when('/:app/:role/:page', {  templateUrl : '/partials/body.html', controller: initApp }).
-    otherwise({redirectTo: '/404'});
+    otherwise({redirectTo: '/index'});
 
   	$httpProvider.interceptors.push(function($q, $rootScope) {
   		
